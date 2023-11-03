@@ -1,5 +1,6 @@
 const appointment = require('../models/Appointment')
 const mongoose = require('mongoose')
+const AppointmentFactory = require ('../factories/AppointmentFactory')
 
 const Appo = mongoose.model("Appointment", appointment)
 
@@ -28,7 +29,15 @@ class AppointmentService {
         if (showFinished) {
             return await Appo.find()
         } else {
-            return Appo.find({'finished': false})
+            let appos = await Appo.find({'finished': false})
+
+            let appointments =[]
+
+            appos.forEach(appointment => {
+                appointments.push(AppointmentFactory.Build(appointment))
+            })
+
+            return appointments
         }
     }
 
