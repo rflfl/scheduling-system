@@ -3,6 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const appointmentService = require('./services/AppointmentService')
+const AppointmentService = require('./services/AppointmentService')
 
 app.use(express.static("public"))
 
@@ -36,6 +37,11 @@ app.post('/create', async (req,res)=>{
         } else {
             res.send("Ocorreu um problema para cadsatrar")
         }
+})
+
+app.get("/getcalendar", async (req,res)=>{
+    let result = await AppointmentService.GetAll(false)
+    res.json(result)
 })
 
 app.listen(8000, () => { })

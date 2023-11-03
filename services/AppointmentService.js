@@ -24,6 +24,14 @@ class AppointmentService {
         }
     }
 
+    async GetAll(showFinished){
+        if (showFinished) {
+            return await Appo.find()
+        } else {
+            return Appo.find({'finished': false})
+        }
+    }
+
 }
 
 module.exports = new AppointmentService()
