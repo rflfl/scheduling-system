@@ -14,7 +14,7 @@ app.set('view engine', 'ejs')
 mongoose.connect("mongodb://localhost:27017/scheduling")
 
 app.get("/", (req, res)=>{
-    res.send('olá')
+    res.render('index')
 })
 
 app.get('/cadastro', (req,res)=>{
