@@ -49,4 +49,10 @@ app.get('/event/:id', async (req, res) => {
     res.render('event',{appo: appointment})
 })
 
+app.post("/finish", async (req,res)=>{
+    let id = req.body.id
+    let result = await AppointmentService.Finish(id)
+    res.redirect("/")
+})
+
 app.listen(8000, () => { })
