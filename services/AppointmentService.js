@@ -1,12 +1,12 @@
 const appointment = require('../models/Appointment')
 const mongoose = require('mongoose')
-const AppointmentFactory = require ('../factories/AppointmentFactory')
+const AppointmentFactory = require('../factories/AppointmentFactory')
 
 const Appo = mongoose.model("Appointment", appointment)
 
 class AppointmentService {
 
-    async Create(name, email, description, cpf, date, time){
+    async Create(name, email, description, cpf, date, time) {
         let newAppo = new Appo({
             name,
             email,
@@ -14,7 +14,8 @@ class AppointmentService {
             cpf,
             date,
             time,
-            finished: false
+            finished: false,
+            notified: false
         })
         try {
             await newAppo.save()
@@ -25,13 +26,13 @@ class AppointmentService {
         }
     }
 
-    async GetAll(showFinished){
+    async GetAll(showFinished) {
         if (showFinished) {
             return await Appo.find()
         } else {
-            let appos = await Appo.find({'finished': false})
+            let appos = await Appo.find({ 'finished': false })
 
-            let appointments =[]
+            let appointments = []
 
             appos.forEach(appointment => {
                 appointments.push(AppointmentFactory.Build(appointment))
@@ -41,18 +42,18 @@ class AppointmentService {
         }
     }
 
-    async GetById(id){
+    async GetById(id) {
         try {
-            let event = Appo.findOne({'_id': id})
+            let event = Appo.findOne({ '_id': id })
             return event
         } catch (error) {
             console.log(error)
         }
     }
 
-    async Finish(id){
+    async Finish(id) {
         try {
-            await Appo.findByIdAndUpdate(id, {finished:true})
+            await Appo.findByIdAndUpdate(id, { finished: true })
             return true
         } catch (error) {
             console.log(error)
@@ -60,14 +61,28 @@ class AppointmentService {
         }
     }
 
-    async Search(query){
+    async Search(query) {
         try {
-            let result = await Appo.find().or([{email:query},{cpf:query}])
+            let result = await Appo.find().or([{ email: query }, { cpf: query }])
             return result
         } catch (error) {
             console.log(error)
             return []
         }
+    }
+
+    async SendNotification() {
+        let result = await this.GetAll(false)
+        result.forEach(item => {
+            let date = item.start.getTime()
+            let hour = 1000 * 60 * 60 // 1 hora
+            let gap = date - Date.now();
+
+            if (gap <= hour) {
+                console.log(item.item)
+                console.log("Enviar notificação")
+            }
+        })
     }
 
 }

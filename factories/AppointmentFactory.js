@@ -5,7 +5,6 @@ class AppointmentFactory{
         let day = simpleAppoitment.date.getDate()+1
         let month = simpleAppoitment.date.getMonth()
         let year = simpleAppoitment.date.getFullYear()
-
         let hour = Number.parseInt(simpleAppoitment.time.split(':')[0])
         let minutes = Number.parseInt(simpleAppoitment.time.split(':')[1])
 
@@ -16,7 +15,8 @@ class AppointmentFactory{
             id: simpleAppoitment._id,
             title: simpleAppoitment.name + ' - ' + simpleAppoitment.description,
             start: startDate,
-            end: startDate
+            end: startDate,
+            notified: simpleAppoitment.notified
         }
 
         return data

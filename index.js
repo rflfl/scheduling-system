@@ -66,4 +66,12 @@ app.get("/search", async (req,res)=>{
     res.render('list',{result})
 })
 
+let pollTime = 2 * 60000
+
+setInterval(async ()=>{
+
+    await AppointmentService.SendNotification()
+
+}, pollTime)
+
 app.listen(8000, () => { })
