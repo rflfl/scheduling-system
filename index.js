@@ -60,4 +60,10 @@ app.get('/list', async (req,res)=>{
     res.render('list',{result})
 })
 
+app.get("/search", async (req,res)=>{
+    let query = req.query.search
+    let result = await AppointmentService.Search(query)
+    res.render('list',{result})
+})
+
 app.listen(8000, () => { })

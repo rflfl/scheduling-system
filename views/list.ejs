@@ -12,10 +12,11 @@
 <body>
     <div class="container">
         <h1>Consultas</h1>
-        <form action="" method="post" class="row align-items-center">
-
-            <input type="search" name="search" id="search" class="form-control" placeholder="Digite o e-mail ou CPF">
-            <button class="btn btn-primary">Pesquisar</button>
+        <form action="/search" method="get" class="row align-items-center">
+            <div class="col-6">
+                <input type="search" name="search" id="search" class="form-control" placeholder="Digite o e-mail ou CPF">
+            </div>
+            <button class="btn btn-primary col-3">Pesquisar</button>
         </form>
         <hr>
         <% result.forEach(consulta=> { %>
