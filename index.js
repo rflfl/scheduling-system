@@ -66,7 +66,7 @@ app.get("/search", async (req,res)=>{
     res.render('list',{result})
 })
 
-let pollTime = 2 * 60000
+let pollTime = 5000
 
 setInterval(async ()=>{
 
