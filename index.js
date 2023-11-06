@@ -44,4 +44,9 @@ app.get("/getcalendar", async (req,res)=>{
     res.json(result)
 })
 
+app.get('/event/:id', async (req, res) => {
+    let appointment = await AppointmentService.GetById(req.params.id)
+    res.render('event',{appo: appointment})
+})
+
 app.listen(8000, () => { })
